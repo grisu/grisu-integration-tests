@@ -1,4 +1,4 @@
-package grisu.frontend.tests;
+package grisu.frontend.tests.utils;
 
 import grisu.control.ServiceInterface;
 import grisu.frontend.control.login.LoginException;
@@ -12,9 +12,6 @@ import groovy.util.ConfigSlurper;
 
 import java.io.File;
 
-import org.junit.Ignore;
-
-@Ignore
 public class TestConfig {
 
 	public static TestConfig create() throws Exception {

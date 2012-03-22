@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
+import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
 
