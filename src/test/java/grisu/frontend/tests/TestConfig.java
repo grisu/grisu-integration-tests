@@ -12,6 +12,9 @@ import groovy.util.ConfigSlurper;
 
 import java.io.File;
 
+import org.junit.Ignore;
+
+@Ignore
 public class TestConfig {
 
 	public static TestConfig create() throws Exception {
