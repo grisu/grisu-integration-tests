@@ -12,7 +12,13 @@ import groovy.util.ConfigSlurper;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TestConfig {
+
+	public static final Logger myLogger = LoggerFactory
+			.getLogger(TestConfig.class);
 
 	public static TestConfig create() throws Exception {
 
@@ -21,6 +27,8 @@ public class TestConfig {
 		if (!testConfigFile.exists()) {
 			return new TestConfig();
 		}
+
+		myLogger.debug("Parsing test config file: " + testConfigFile);
 
 		ConfigObject credConfig = new ConfigSlurper().parse(testConfigFile
 				.toURL());
