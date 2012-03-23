@@ -52,6 +52,8 @@ public class TestConfig {
 
 	private String jobname = "testjob";
 
+	private final String pythonFileName = "pytest.py";
+
 	private Credential cred = null;
 
 	public TestConfig() {
@@ -116,6 +118,14 @@ public class TestConfig {
 
 	public String getJobname() {
 		return jobname;
+	}
+
+	public String getPythonScript() {
+		return Input.getFile(pythonFileName);
+	}
+
+	public String getPythonScriptName() {
+		return pythonFileName;
 	}
 
 	public synchronized ServiceInterface getServiceInterface() {

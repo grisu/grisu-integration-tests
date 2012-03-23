@@ -3,6 +3,7 @@ package grisu.frontend.tests;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
@@ -12,6 +13,7 @@ import grisu.model.GrisuRegistryManager;
 
 import java.io.File;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -149,6 +151,32 @@ public class TestJobSubmission {
 		job.setApplication("Invalid");
 
 		job.createJob(config.getFqan());
+
+	}
+
+	@Test
+	public void testPythonStdinIssue() throws Exception {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("python " + config.getPythonScriptName());
+		job.setApplication("Python");
+		job.addInputFileUrl(config.getPythonScript());
+
+		job.createJob(config.getFqan());
+
+		job.submitJob(true);
+
+		job.waitForJobToFinish(4);
+
+		String stderr = job.getStdErrContent();
+
+		assertTrue("Stderr for job not empty.", StringUtils.isBlank(stderr));
+
+		String stdout = job.getStdOutContent();
+		myLogger.debug("Content: " + stdout);
+
+		assertEquals("Hello Python World!", stdout.trim());
 
 	}
 
