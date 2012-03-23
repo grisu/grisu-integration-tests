@@ -4,7 +4,6 @@ import grisu.control.ServiceInterface;
 import grisu.frontend.control.login.LoginException;
 import grisu.frontend.control.login.LoginManager;
 import grisu.settings.Environment;
-import grisu.tests.util.Input;
 import grith.jgrith.credential.Credential;
 import grith.jgrith.credential.CredentialLoader;
 import groovy.util.ConfigObject;
