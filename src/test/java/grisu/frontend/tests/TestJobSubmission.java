@@ -7,12 +7,14 @@ import static org.junit.Assert.assertTrue;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
+import grisu.frontend.tests.utils.Input;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
 
 import java.io.File;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -34,6 +36,9 @@ public class TestJobSubmission {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+
+		// delete temp dir
+		FileUtils.deleteDirectory(Input.INPUT_FILES_DIR);
 
 		config = TestConfig.create();
 
