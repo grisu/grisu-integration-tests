@@ -4,6 +4,25 @@
 	<groupId>grisu.frontend</groupId>
 	<artifactId>grisu-integration-tests</artifactId>
 	<version>0.1-SNAPSHOT</version>
+	
+	<repositories>
+		<repository>
+			<id>bestgrid.public.release</id>
+			<url>http://code.ceres.auckland.ac.nz/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	
 	<dependencies>
 		<dependency>
 			<groupId>grisu.backend</groupId>
