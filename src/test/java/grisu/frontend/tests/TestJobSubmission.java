@@ -13,6 +13,9 @@ import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -21,9 +24,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+import org.python.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@RunWith(value = Parameterized.class)
 public class TestJobSubmission {
 
 	public static Logger myLogger = LoggerFactory
@@ -31,30 +39,58 @@ public class TestJobSubmission {
 
 	private static TestConfig config;
 
-	private static ServiceInterface si;
-	private static FileManager fm;
+	private static Map<String, ServiceInterface> sis;
+
+	@Parameters
+	public static Collection<Object[]> data() {
+		List<Object[]> result = Lists.newArrayList();
+
+		for (String backend : getConfig().getServiceInterfaces().keySet()) {
+			result.add(new Object[] { backend,
+					config.getServiceInterfaces().get(backend) });
+		}
+
+		return result;
+	}
+
+	public synchronized static TestConfig getConfig() {
+		if ( config == null ) {
+			try {
+				config = TestConfig.create();
+
+				sis = config.getServiceInterfaces();
+			} catch (Exception e) {
+				throw new RuntimeException("Can't setup test config: "
+						+ e.getLocalizedMessage(), e);
+			}
+		}
+		return config;
+	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
 		// delete temp dir
 		FileUtils.deleteDirectory(Input.INPUT_FILES_DIR);
+		getConfig();
 
-		config = TestConfig.create();
+		for (String backend : sis.keySet()) {
+			ServiceInterface si = sis.get(backend);
+			System.out.println("Setting up backend: " + backend);
+			FileManager fm = GrisuRegistryManager.getDefault(si)
+					.getFileManager();
+			// make sure remoteInputFile is populated
+			fm.deleteFile(getConfig().getGsiftpRemoteInputFile());
+			fm.cp(getConfig().getInputFile(),
+					config.getGsiftpRemoteInputParent(), true);
 
-		si = config.getServiceInterface();
-		fm = GrisuRegistryManager.getDefault(si).getFileManager();
+			long localsize = new File(config.getInputFile()).length();
+			long remotesize = fm.getFileSize(config.getGsiftpRemoteInputFile());
 
-		// make sure remoteInputFile is populated
-		fm.deleteFile(config.getGsiftpRemoteInputFile());
-		fm.cp(config.getInputFile(), config.getGsiftpRemoteInputParent(), true);
-
-		long localsize = new File(config.getInputFile()).length();
-		long remotesize = fm.getFileSize(config.getGsiftpRemoteInputFile());
-
-		if ( localsize != remotesize ) {
-			throw new RuntimeException(
-					"Can't setup remote input file: sizes differ");
+			if (localsize != remotesize) {
+				throw new RuntimeException(
+						"Can't setup remote input file: sizes differ");
+			}
 		}
 
 	}
@@ -62,9 +98,19 @@ public class TestJobSubmission {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 
-		if (si != null) {
+		for (ServiceInterface si : sis.values()) {
 			si.logout();
 		}
+	}
+
+	private final ServiceInterface si;
+	private final String backendname;
+	private final FileManager fm;
+
+	public TestJobSubmission(String backendname, ServiceInterface si) {
+		this.backendname = backendname;
+		this.si = si;
+		this.fm = GrisuRegistryManager.getDefault(si).getFileManager();
 	}
 
 	@Before

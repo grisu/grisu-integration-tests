@@ -10,7 +10,11 @@ import groovy.util.ConfigObject;
 import groovy.util.ConfigSlurper;
 
 import java.io.File;
+import java.util.Map;
+import java.util.Set;
 
+import org.python.google.common.collect.Maps;
+import org.python.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +49,7 @@ public class TestConfig {
 	private String inputFileName2 = "inputFile2.txt";
 
 	private String gsiftpRemoteInputParent = "gsiftp://globus.test.nesi.org.nz/home/test1/";
-	private String backend = "testbed2";
+	private Set<String> backends = Sets.newHashSet("local", "testbed");
 
 	private String credentialConfigFile = Input.getFile("cred.groovy");
 
@@ -55,11 +59,13 @@ public class TestConfig {
 
 	private Credential cred = null;
 
+	private Map<String, ServiceInterface> backendCache = null;
+
 	public TestConfig() {
 	}
 
-	public String getBackend() {
-		return backend;
+	public Set<String> getBackends() {
+		return backends;
 	}
 
 	public String getContent() {
@@ -127,20 +133,31 @@ public class TestConfig {
 		return pythonFileName;
 	}
 
-	public synchronized ServiceInterface getServiceInterface() {
-		if ( si == null ) {
-			try {
-				si = LoginManager.login(getCredential(), backend, false);
-			} catch (LoginException e) {
-				throw new RuntimeException("Can't login: "
-						+ e.getLocalizedMessage(), e);
+	public synchronized Map<String, ServiceInterface> getServiceInterfaces() {
+
+		if (backendCache == null) {
+			backendCache = Maps.newTreeMap();
+
+			for (String b : backends) {
+
+				ServiceInterface si = null;
+
+				try {
+					si = LoginManager.login(getCredential(), b, false);
+					backendCache.put(b, si);
+				} catch (LoginException e) {
+					throw new RuntimeException("Can't login: "
+							+ e.getLocalizedMessage(), e);
+				}
 			}
+
 		}
-		return si;
+
+		return backendCache;
 	}
 
-	public void setBackend(String backend) {
-		this.backend = backend;
+	public void setBackend(Set<String> backends) {
+		this.backends = backends;
 	}
 
 	public void setContent(String content) {
