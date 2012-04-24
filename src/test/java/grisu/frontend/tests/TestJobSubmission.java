@@ -37,15 +37,16 @@ public class TestJobSubmission {
 	public static Logger myLogger = LoggerFactory
 			.getLogger(TestJobSubmission.class);
 
-	private static TestConfig config;
+	private static final TestConfig config = TestConfig.getTestConfig();
 
-	private static Map<String, ServiceInterface> sis;
+	private static final Map<String, ServiceInterface> sis = config
+			.getServiceInterfaces();
 
 	@Parameters
 	public static Collection<Object[]> data() {
 		List<Object[]> result = Lists.newArrayList();
 
-		for (String backend : getConfig().getServiceInterfaces().keySet()) {
+		for (String backend : config.getServiceInterfaces().keySet()) {
 			result.add(new Object[] { backend,
 					config.getServiceInterfaces().get(backend) });
 		}
@@ -53,26 +54,13 @@ public class TestJobSubmission {
 		return result;
 	}
 
-	public synchronized static TestConfig getConfig() {
-		if ( config == null ) {
-			try {
-				config = TestConfig.create();
-
-				sis = config.getServiceInterfaces();
-			} catch (Exception e) {
-				throw new RuntimeException("Can't setup test config: "
-						+ e.getLocalizedMessage(), e);
-			}
-		}
-		return config;
-	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
 		// delete temp dir
 		FileUtils.deleteDirectory(Input.INPUT_FILES_DIR);
-		getConfig();
+		// getConfig();
 
 		for (String backend : sis.keySet()) {
 			ServiceInterface si = sis.get(backend);
@@ -80,8 +68,8 @@ public class TestJobSubmission {
 			FileManager fm = GrisuRegistryManager.getDefault(si)
 					.getFileManager();
 			// make sure remoteInputFile is populated
-			fm.deleteFile(getConfig().getGsiftpRemoteInputFile());
-			fm.cp(getConfig().getInputFile(),
+			fm.deleteFile(config.getGsiftpRemoteInputFile());
+			fm.cp(config.getInputFile(),
 					config.getGsiftpRemoteInputParent(), true);
 
 			long localsize = new File(config.getInputFile()).length();

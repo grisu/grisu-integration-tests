@@ -23,7 +23,9 @@ public class TestConfig {
 	public static final Logger myLogger = LoggerFactory
 			.getLogger(TestConfig.class);
 
-	public static TestConfig create() throws Exception {
+	private static TestConfig testconfig = null;
+
+	private static TestConfig create() throws Exception {
 
 		File testConfigFile = new File(Environment.getGrisuDirectory(), "integrationtest.groovy");
 
@@ -39,6 +41,18 @@ public class TestConfig {
 		TestConfig config = (TestConfig) credConfig.getProperty("config");
 		return config;
 
+	}
+
+	public static synchronized TestConfig getTestConfig() {
+		if (testconfig == null) {
+			try {
+				testconfig = create();
+			} catch (Exception e) {
+				throw new RuntimeException("Can't create testconfig: "
+						+ e.getLocalizedMessage(), e);
+			}
+		}
+		return testconfig;
 	}
 
 	private ServiceInterface si;
