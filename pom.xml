@@ -28,6 +28,12 @@
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
 			<version>1.1.0</version>
+			<exclusions>
+			<exclusion>
+			    <groupId>org.slf4j</groupId>
+          		<artifactId>slf4j-simple</artifactId>
+			</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>grisu.backend</groupId>
