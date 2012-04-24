@@ -118,6 +118,14 @@ public class TestJobSubmission {
 		si.kill(config.getJobname(), true);
 	}
 
+	/**
+	 * Submits a generic job with both local and remote input files.
+	 * 
+	 * Tests direct file upload and 3rd party gridftp transfer as well as job
+	 * submission.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void simpleGenericJobWithLocalAndRemoteInput() throws Exception {
 
@@ -144,6 +152,11 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Submits a generic cat job with a local input file.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void simpleGenericJobWithLocalInput() throws Exception {
 
@@ -167,6 +180,12 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Submits a generic cat job with remote input file in order to test staging
+	 * using gridftp 3rd party transfer.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void simpleGenericJobWithRemoteInput() throws Exception {
 
@@ -205,6 +224,12 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Submits a python job in order to test whether issue with stdin
+	 * interfering is disappeared.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testPythonStdinIssue() throws Exception {
 
@@ -231,6 +256,11 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Submits a generic job with auto-queue selection.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSimpleGenericJob() throws Exception {
 
@@ -253,6 +283,11 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Submits a job with specifying the package to use but not the queue.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSimpleUnixCommandsJob() throws Exception {
 
@@ -274,6 +309,12 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Tries to submit a non-valid job where a wrong package version is
+	 * specified.
+	 * 
+	 * @throws JobPropertiesException
+	 */
 	@Test(expected = JobPropertiesException.class)
 	public void testVersionNotAvailable() throws JobPropertiesException {
 

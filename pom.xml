@@ -4,7 +4,7 @@
 	<groupId>grisu.frontend</groupId>
 	<artifactId>grisu-integration-tests</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	
+
 	<repositories>
 		<repository>
 			<id>bestgrid.public.release</id>
@@ -22,8 +22,13 @@
 		</repository>
 	</repositories>
 
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>grisu.backend</groupId>
 			<artifactId>grisu-core</artifactId>
@@ -50,7 +55,7 @@
 			<artifactId>jgrith</artifactId>
 			<version>0.7-SNAPSHOT</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
@@ -66,6 +71,7 @@
 			<artifactId>grisu-client</artifactId>
 			<version>${grisu.version}</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -128,7 +134,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 
 		</plugins>
 
