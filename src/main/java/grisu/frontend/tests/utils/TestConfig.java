@@ -59,17 +59,13 @@ public class TestConfig {
 	private String fqan = "/test/nesi";
 	private String content = "HELLO WORLD";
 	private String inputFileName = "inputFile.txt";
-
 	private String inputFileName2 = "inputFile2.txt";
-
 	private String gsiftpRemoteInputParent = "gsiftp://globus.test.nesi.org.nz/home/test1/";
 	private Set<String> backends = Sets.newHashSet("local", "testbed");
-
 	private String credentialConfigFile = Input.getFile("cred.groovy");
-
 	private String jobname = "testjob";
-
 	private final String pythonFileName = "pytest.py";
+	private final String killJobManagerScriptName = "kill_job_managers.sh";
 
 	private Credential cred = null;
 
@@ -145,6 +141,14 @@ public class TestConfig {
 
 	public String getPythonScriptName() {
 		return pythonFileName;
+	}
+
+	public String getKillJobManagersScript() {
+		return Input.getFile(this.killJobManagerScriptName);
+	}
+
+	public String getKillJobManagersScriptName() {
+		return this.killJobManagerScriptName;
 	}
 
 	public synchronized Map<String, ServiceInterface> getServiceInterfaces() {
