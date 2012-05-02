@@ -316,4 +316,30 @@ public class TestJobSubmission {
 
 	}
 
+	/**
+	 * Verify that environment variables are passed along.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testEnvironmentVariables() throws Exception {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("env");
+		job.setApplication("generic");
+		job.addEnvironmentVariable("var1","hello, world!");
+		job.addEnvironmentVariable("var2","/tmp/test");
+
+		job.createJob(config.getFqan());
+		job.submitJob(true);
+		job.waitForJobToFinish(4);
+		
+		String stdout = job.getStdOutContent();
+		assertThat(stdout, containsString("var1=test"));
+		assertThat(stdout, containsString("var2=hello, world 1!"));
+		assertThat(stdout, containsString("GRISU_APPLICATION=generic"));
+		assertThat(stdout, containsString("GRISU_EXECUTABLE=env"));
+	}
+
 }
