@@ -336,8 +336,8 @@ public class TestJobSubmission {
 		job.waitForJobToFinish(4);
 		
 		String stdout = job.getStdOutContent();
-		assertThat(stdout, containsString("var1=test"));
-		assertThat(stdout, containsString("var2=hello, world 1!"));
+		assertThat(stdout, containsString("var1=hello, world!"));
+		assertThat(stdout, containsString("var2=/tmp/test"));
 		assertThat(stdout, containsString("GRISU_APPLICATION=generic"));
 		assertThat(stdout, containsString("GRISU_EXECUTABLE=env"));
 	}
