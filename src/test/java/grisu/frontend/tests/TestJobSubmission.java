@@ -364,8 +364,10 @@ public class TestJobSubmission {
 		job.waitForJobToFinish(1);
 
 		String stdout = job.getStdOutContent();
+		String stderr = job.getStdErrContent();
 		String status = job.getStatusString(true);
 		myLogger.debug("Content: " + stdout);
+		myLogger.debug("Content: " + stderr);
 		myLogger.debug("Content: " + status);
 		assertEquals("SUCCESS", stdout.trim());
 		// Until we have the fix in place we will see the job as Failed.
