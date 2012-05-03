@@ -65,6 +65,7 @@ public class TestConfig {
 	private String credentialConfigFile = Input.getFile("cred.groovy");
 	private String jobname = "testjob";
 	private final String pythonFileName = "pytest.py";
+	private final String killmeScriptName = "kill_me.sh";
 	private final String killJobManagerScriptName = "kill_job_managers.sh";
 
 	private Credential cred = null;
@@ -141,6 +142,14 @@ public class TestConfig {
 
 	public String getPythonScriptName() {
 		return pythonFileName;
+	}
+
+	public String getKillmeScript() {
+		return Input.getFile(this.killmeScriptName);
+	}
+
+	public String getKillmeScriptName() {
+		return this.killmeScriptName;
 	}
 
 	public String getKillJobManagersScript() {

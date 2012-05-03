@@ -1,23 +1,41 @@
-# kill all globus job managers of the user who submitted this job
-# and then sleep for the configured number of seconds
+sleep_seconds=$1
 
-sleep_time=$1
-success_string=$2
-error_string=$3
-uid=$(whoami)
-pids=$(ps -ef | grep globus-job-manager | grep ${uid} | grep -v grep | sed 's/ \+/ /g' | cut -d\  -f2)
+killed_jobmanagers_success_message="KILLED_JOBMANAGERS_SUCCESS"
+killed_jobmanagers_failure_message="KILLED_JOBMANAGERS_FAILURE"
+on_normal_term_message="NORMAL_TERMINATION"
+on_normal_term_rc=0
+on_killed_message="GOT_KILLED"
+on_killed_rc=42
 
+get_job_manager_pids() {
+  uid=$(whoami)
+  echo $(ps -ef | grep globus-job-manager | grep ${uid} | grep -v grep | sed 's/ \+/ /g' | cut -d\  -f2)
+}
+
+trap "echo ${on_killed_message}; exit ${on_killed_rc}" INT TERM
+
+pids=$(get_job_manager_pids)
+
+# wait for job managers to have fully started
+# without waiting, a job manager might be restarted
 sleep 5
+
 for pid in ${pids}; do
   kill -9 ${pid}
 done
 
+# a good kill may need time
 sleep 5
-pids2=$(ps -ef | grep globus-job-manager | grep ${uid} | grep -v grep | sed 's/ \+/ /g' | cut -d\  -f2)
+
+pids2=$(get_job_manager_pids)
+
 if [ "X" == "X${pids2}" ] && [ "X" != "X${pids}" ]; then
-  echo ${success_string}
+  echo ${killed_jobmanagers_success_message}
 else
-  echo ${error_string} 
+  echo ${killed_jobmanagers_failure_message} 
 fi
 
-sleep ${sleep_time}
+# wait for the configured number of seconds
+sleep ${sleep_seconds}
+echo ${on_normal_term_message}
+exit ${on_normal_term_rc}
