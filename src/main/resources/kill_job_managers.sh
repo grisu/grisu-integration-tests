@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # kill all globus job managers of the user who submitted this job
 # and then sleep for the configured number of seconds
 
@@ -17,9 +15,9 @@ done
 sleep 5
 pids2=$(ps -ef | grep globus-job-manager | grep ${uid} | grep -v grep | sed 's/ \+/ /g' | cut -d\  -f2)
 if [ "X" == "X${pids2}" ] && [ "X" != "X${pids}" ]; then
-  echo ${success_string} > stdout.txt
+  echo ${success_string}
 else
-  echo ${error_string} > stdout.txt
+  echo ${error_string} 
 fi
 
 sleep ${sleep_time}

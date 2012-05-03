@@ -353,8 +353,9 @@ public class TestJobSubmission {
 
 		JobObject job = new JobObject(si);
 		job.setJobname(config.getJobname());
-		myLogger.warn("commandline: " + "bash " + config.getKillJobManagersScriptName() + " 1 SUCCESS FAILURE");
-		job.setCommandline("bash " + config.getKillJobManagersScriptName() + " 1 SUCCESS FAILURE");
+		String command = "bash " + config.getKillJobManagersScriptName() + " 1 KILLSUCCESS KILLFAILURE";
+		myLogger.warn("commandline: " + command);
+		job.setCommandline(command);
 		job.setApplication("generic");
 		job.addInputFileUrl(config.getKillJobManagersScript());
 		
@@ -370,11 +371,8 @@ public class TestJobSubmission {
 		myLogger.warn("stdout: " + stdout);
 		myLogger.warn("stderr: " + stderr);
 		myLogger.warn("status: " + status);
-		assertEquals("SUCCESS", stdout.trim());
-		// Until we have the fix in place we will see the job as Failed.
-		// Once we have the fix in place this test will fail and we can adjust the test to expect
-		// the job status to be JobConstants.DONE_STRING
-		assertEquals(JobConstants.FAILED_STRING, status);
+		assertEquals("KILLSUCCESS", stdout.trim());
+		assertEquals(JobConstants.DONE_STRING, status);
 	}
 
 }
