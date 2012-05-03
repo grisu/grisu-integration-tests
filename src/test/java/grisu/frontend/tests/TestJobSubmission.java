@@ -344,7 +344,8 @@ public class TestJobSubmission {
 	}
 
 	/**
-	 * Verify that get the right status of a job if Gram starts a new job manager for the job.
+	 * Verify that we get the right status of a job if Gram has to start
+	 * a new job manager for the job if we ask for job status
 	 * 
 	 * @throws Exception
 	 */
