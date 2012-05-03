@@ -378,7 +378,9 @@ public class TestJobSubmission {
 
 	/**
 	 * Verify that we get the right status of a job if Gram has to start
-	 * a new job manager for the job if we ask for job status
+	 * a new job manager for the job if we ask for job status.
+	 * Prerequisites for this test to work:
+	 * The job must run on the same machine like gram
 	 * 
 	 * @throws Exception
 	 */
@@ -411,7 +413,9 @@ public class TestJobSubmission {
 
 	/**
 	 * Verify that we can kill a job if Gram has to start a new job manager
-	 * for the job when we kill it
+	 * for the job when we kill it.
+	 * Prerequisites for this test to work:
+	 * The job must run on the same machine like gram.
 	 * 
 	 * @throws Exception
 	 */
