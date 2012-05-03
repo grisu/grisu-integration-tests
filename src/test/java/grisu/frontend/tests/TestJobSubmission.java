@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import grisu.control.JobConstants;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
@@ -340,6 +341,37 @@ public class TestJobSubmission {
 		assertThat(stdout, containsString("var2=/tmp/test"));
 		assertThat(stdout, containsString("GRISU_APPLICATION=generic"));
 		assertThat(stdout, containsString("GRISU_EXECUTABLE=env"));
+	}
+
+	/**
+	 * Verify that get the right status of a job if Gram starts a new job manager for the job.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetStatusSurvivesJobManagerRestart() throws Exception {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("sh " + config.getKillJobManagersScriptName() + " 1 SUCCESS FAILURE");
+		job.setApplication("generic");
+		job.addInputFileUrl(config.getKillJobManagersScript());
+		
+		job.createJob(config.getFqan());
+		job.submitJob(true);
+
+		Thread.sleep(15000);
+		job.waitForJobToFinish(1);
+
+		String stdout = job.getStdOutContent();
+		String status = job.getStatusString(true);
+		myLogger.debug("Content: " + stdout);
+		myLogger.debug("Content: " + status);
+		assertEquals("SUCCESS", stdout.trim());
+		// Until we have the fix in place we will see the job as Failed.
+		// Once we have the fix in place this test will fail and we can adjust the test to expect
+		// the job status to be JobConstants.DONE_STRING
+		assertEquals(JobConstants.FAILED_STRING, status);
 	}
 
 }
