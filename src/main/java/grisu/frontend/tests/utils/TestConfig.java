@@ -64,9 +64,11 @@ public class TestConfig {
 	private Set<String> backends = Sets.newHashSet("local", "testbed");
 	private String credentialConfigFile = Input.getFile("cred.groovy");
 	private String jobname = "testjob";
+	private String subLoc10minMax = "test1:globus.test.nesi.org.nz";
 	private final String pythonFileName = "pytest.py";
 	private final String killmeScriptName = "kill_me.sh";
 	private final String killJobManagerScriptName = "kill_job_managers.sh";
+
 
 	private Credential cred = null;
 
@@ -109,7 +111,7 @@ public class TestConfig {
 	}
 
 	public String getGsiftpRemoteInputFile() {
-		return gsiftpRemoteInputParent+"/"+inputFileName;
+		return gsiftpRemoteInputParent + "/" + inputFileName;
 	}
 
 	public String getGsiftpRemoteInputParent() {
@@ -136,12 +138,12 @@ public class TestConfig {
 		return jobname;
 	}
 
-	public String getPythonScript() {
-		return Input.getFile(pythonFileName);
+	public String getKillJobManagersScript() {
+		return Input.getFile(this.killJobManagerScriptName);
 	}
 
-	public String getPythonScriptName() {
-		return pythonFileName;
+	public String getKillJobManagersScriptName() {
+		return this.killJobManagerScriptName;
 	}
 
 	public String getKillmeScript() {
@@ -152,12 +154,12 @@ public class TestConfig {
 		return this.killmeScriptName;
 	}
 
-	public String getKillJobManagersScript() {
-		return Input.getFile(this.killJobManagerScriptName);
+	public String getPythonScript() {
+		return Input.getFile(pythonFileName);
 	}
 
-	public String getKillJobManagersScriptName() {
-		return this.killJobManagerScriptName;
+	public String getPythonScriptName() {
+		return pythonFileName;
 	}
 
 	public synchronized Map<String, ServiceInterface> getServiceInterfaces() {
@@ -183,6 +185,10 @@ public class TestConfig {
 		return backendCache;
 	}
 
+	public String getSubLoc10minMax() {
+		return subLoc10minMax;
+	}
+
 	public void setBackend(Set<String> backends) {
 		this.backends = backends;
 	}
@@ -203,16 +209,21 @@ public class TestConfig {
 		this.gsiftpRemoteInputParent = gsiftpRemoteInputParent;
 	}
 
-
 	public void setInputFileName(String inputFileName) {
 		this.inputFileName = inputFileName;
 	}
 
+
 	public void setInputFileName2(String inputFileName2) {
 		this.inputFileName2 = inputFileName2;
 	}
+
 	public void setJobname(String jobname) {
 		this.jobname = jobname;
+	}
+
+	public void setSubLoc10minMax(String subLoc) {
+		this.subLoc10minMax = subLoc;
 	}
 
 }

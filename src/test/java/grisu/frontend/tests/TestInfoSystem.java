@@ -3,6 +3,8 @@ package grisu.frontend.tests;
 import static org.hamcrest.Matchers.isIn;
 import static org.junit.Assert.assertThat;
 import grisu.control.ServiceInterface;
+import grisu.control.exceptions.JobPropertiesException;
+import grisu.frontend.model.job.JobObject;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
@@ -81,6 +83,28 @@ public class TestInfoSystem {
 		assertThat("/none", isIn(fqans));
 		assertThat("/test/nesi", isIn(fqans));
 		assertThat("/test/demo", isIn(fqans));
+
+	}
+
+	/**
+	 * Tests whether a job that exceeds the max walltime of the queue it is
+	 * submitted to gets rejected.
+	 * 
+	 * @throws Exception
+	 */
+	@Test(expected = JobPropertiesException.class)
+	public void testMaxWalltimeNotAllowedForQueueJobSubmission()
+			throws Exception {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("echo " + config.getContent());
+		job.setApplication("generic");
+		job.setSubmissionLocation(config.getSubLoc10minMax());
+		job.setWalltimeInSeconds(610);
+
+		job.createJob(config.getFqan());
+
 
 	}
 
