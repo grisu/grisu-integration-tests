@@ -121,7 +121,7 @@ public class TestInfoSystem {
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
 		job.setSubmissionLocation(config.getSubLoc10minMax());
-		job.setWalltimeInSeconds(601);
+		job.setWalltimeInSeconds(660);
 
 		job.createJob(config.getFqan());
 	}
