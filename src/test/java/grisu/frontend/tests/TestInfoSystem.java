@@ -130,6 +130,38 @@ public class TestInfoSystem {
 	}
 
 	/**
+	 * Checks that query for queues returns queue that has slightly bigger max
+	 * walltime than is configured in the job.
+	 */
+	@Test
+	public void testQueryQueuesAlmostMaxWalltime() {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("echo " + config.getContent());
+		job.setApplication("generic");
+		job.setWalltimeInSeconds(599);
+
+		DtoJob dto = DtoJob.createJob(JobConstants.UNDEFINED,
+				job.getStringJobSubmissionPropertyMap(), null, null, false);
+
+		List<Queue> queues = si.findMatchingSubmissionLocationsUsingMap(dto,
+				config.getFqan(),
+				false);
+
+		boolean contains = false;
+		for (Queue q : queues) {
+			if (q.toString().equals(config.getSubLoc10minMax())) {
+				contains = true;
+				break;
+			}
+		}
+
+		assert (contains);
+
+	}
+
+	/**
 	 * Checks that query for queues don't returns queue that has smaller max
 	 * walltime than is configured in the job.
 	 */
@@ -146,8 +178,7 @@ public class TestInfoSystem {
 				job.getStringJobSubmissionPropertyMap(), null, null, false);
 
 		List<Queue> queues = si.findMatchingSubmissionLocationsUsingMap(dto,
-				config.getFqan(),
-				false);
+				config.getFqan(), false);
 
 		boolean contains = false;
 		for (Queue q : queues) {
