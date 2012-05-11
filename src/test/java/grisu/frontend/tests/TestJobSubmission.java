@@ -11,6 +11,7 @@ import grisu.frontend.tests.utils.Input;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
+import grisu.model.dto.DtoStringList;
 
 import java.io.File;
 import java.util.Collection;
@@ -63,7 +64,16 @@ public class TestJobSubmission {
 		// getConfig();
 
 		for (String backend : sis.keySet()) {
+
 			ServiceInterface si = sis.get(backend);
+			// killing all jobs
+			System.out.println("Killing all jobs on backend: " + backend);
+			DtoStringList allJobnames = si.getAllJobnames(null);
+			if ((allJobnames != null)
+					&& (allJobnames.getStringList().size() > 0)) {
+				si.killJobs(allJobnames, true);
+			}
+
 			System.out.println("Setting up backend: " + backend);
 			FileManager fm = GrisuRegistryManager.getDefault(si)
 					.getFileManager();
@@ -87,6 +97,11 @@ public class TestJobSubmission {
 	public static void tearDownAfterClass() throws Exception {
 
 		for (ServiceInterface si : sis.values()) {
+			DtoStringList allJobnames = si.getAllJobnames(null);
+			if ((allJobnames != null)
+					&& (allJobnames.getStringList().size() > 0)) {
+				si.killJobs(allJobnames, true);
+			}
 			si.logout();
 		}
 	}
@@ -108,10 +123,10 @@ public class TestJobSubmission {
 
 	/**
 	 * Submits a generic job with both local and remote input files.
-	 * 
+	 *
 	 * Tests direct file upload and 3rd party gridftp transfer as well as job
 	 * submission.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -142,7 +157,7 @@ public class TestJobSubmission {
 
 	/**
 	 * Submits a generic cat job with a local input file.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -171,7 +186,7 @@ public class TestJobSubmission {
 	/**
 	 * Submits a generic cat job with remote input file in order to test staging
 	 * using gridftp 3rd party transfer.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -215,7 +230,7 @@ public class TestJobSubmission {
 	/**
 	 * Submits a python job in order to test whether issue with stdin
 	 * interfering is disappeared.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -246,7 +261,7 @@ public class TestJobSubmission {
 
 	/**
 	 * Submits a generic job with auto-queue selection.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -271,9 +286,10 @@ public class TestJobSubmission {
 
 	}
 
+
 	/**
 	 * Submits a job with specifying the package to use but not the queue.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test
@@ -300,7 +316,7 @@ public class TestJobSubmission {
 	/**
 	 * Tries to submit a non-valid job where a wrong package version is
 	 * specified.
-	 * 
+	 *
 	 * @throws JobPropertiesException
 	 */
 	@Test(expected = JobPropertiesException.class)
