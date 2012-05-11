@@ -327,7 +327,7 @@ public class TestJobSubmission {
 
 		job.waitForJobToReachState(JobConstants.ACTIVE_STRING, 4);
 		job.kill(false);
-		job.waitForJobToFinish(3);
+		// job.waitForJobToFinish(3);
 
 		String stdout = job.getStdOutContent();
 		String status = job.getStatusString(true);
