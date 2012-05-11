@@ -2,12 +2,15 @@ package grisu.frontend.tests;
 
 import static org.hamcrest.Matchers.isIn;
 import static org.junit.Assert.assertThat;
+import grisu.control.JobConstants;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
+import grisu.model.dto.DtoJob;
+import grisu.model.info.dto.Queue;
 
 import java.util.Collection;
 import java.util.List;
@@ -124,6 +127,38 @@ public class TestInfoSystem {
 		job.setWalltimeInSeconds(660);
 
 		job.createJob(config.getFqan());
+	}
+
+	/**
+	 * Checks that query for queues don't returns queue that has smaller max
+	 * walltime than is configured in the job.
+	 */
+	@Test
+	public void testQueryQueuesMaxWalltime() {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("echo " + config.getContent());
+		job.setApplication("generic");
+		job.setWalltimeInSeconds(660);
+
+		DtoJob dto = DtoJob.createJob(JobConstants.UNDEFINED,
+				job.getStringJobSubmissionPropertyMap(), null, null, false);
+
+		List<Queue> queues = si.findMatchingSubmissionLocationsUsingMap(dto,
+				config.getFqan(),
+				false);
+
+		boolean contains = false;
+		for (Queue q : queues) {
+			if (q.toString().equals(config.getSubLoc10minMax())) {
+				contains = true;
+				break;
+			}
+		}
+
+		assert (!contains);
+
 	}
 
 }
