@@ -238,7 +238,6 @@ public class TestJobSubmission {
 
 		job.waitForJobToReachState(JobConstants.ACTIVE, 4);
 		job.kill(true);
-		job.waitForJobToFinish(3);
 
 		assertFalse(fm.fileExists(job.getJobDirectoryUrl()));
 
