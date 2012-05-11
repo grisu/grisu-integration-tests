@@ -325,7 +325,7 @@ public class TestJobSubmission {
 		job.createJob(config.getFqan());
 		job.submitJob(true);
 
-		job.waitForJobToReachState(JobConstants.ACTIVE_STRING, 4);
+		job.waitForJobToReachState(JobConstants.ACTIVE, 4);
 		job.kill(false);
 		// job.waitForJobToFinish(3);
 
