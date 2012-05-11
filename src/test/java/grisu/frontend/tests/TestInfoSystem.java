@@ -87,9 +87,29 @@ public class TestInfoSystem {
 	}
 
 	/**
+	 * Tests whether a job that is within the max walltime of a queue can be
+	 * created.
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void testAlmostMaxWalltimeAllowedForQueueJobSubmission()
+			throws Exception {
+
+		JobObject job = new JobObject(si);
+		job.setJobname(config.getJobname());
+		job.setCommandline("echo " + config.getContent());
+		job.setApplication("generic");
+		job.setSubmissionLocation(config.getSubLoc10minMax());
+		job.setWalltimeInSeconds(599);
+
+		job.createJob(config.getFqan());
+	}
+
+	/**
 	 * Tests whether a job that exceeds the max walltime of the queue it is
 	 * submitted to gets rejected.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test(expected = JobPropertiesException.class)
@@ -101,11 +121,9 @@ public class TestInfoSystem {
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
 		job.setSubmissionLocation(config.getSubLoc10minMax());
-		job.setWalltimeInSeconds(610);
+		job.setWalltimeInSeconds(601);
 
 		job.createJob(config.getFqan());
-
-
 	}
 
 }
