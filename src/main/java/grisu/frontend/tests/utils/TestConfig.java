@@ -3,6 +3,7 @@ package grisu.frontend.tests.utils;
 import grisu.control.ServiceInterface;
 import grisu.frontend.control.login.LoginException;
 import grisu.frontend.control.login.LoginManager;
+import grisu.jcommons.constants.GridEnvironment;
 import grisu.settings.Environment;
 import grith.jgrith.credential.Credential;
 import grith.jgrith.credential.CredentialLoader;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.python.google.common.collect.Maps;
 import org.python.google.common.collect.Sets;
 import org.slf4j.Logger;
@@ -39,6 +41,12 @@ public class TestConfig {
 				.toURL());
 
 		TestConfig config = (TestConfig) credConfig.getProperty("config");
+
+		String myproxy = config.getMyProxyServer();
+		if (StringUtils.isNotBlank(myproxy)) {
+			GridEnvironment.MYPROXY_SERVER = myproxy;
+		}
+
 		return config;
 
 	}
@@ -155,6 +163,10 @@ public class TestConfig {
 		return this.killmeScriptName;
 	}
 
+	public String getMyproxyServer() {
+		return myproxyServer;
+	}
+
 	public String getMyProxyServer() {
 		return this.myproxyServer;
 	}
@@ -210,10 +222,10 @@ public class TestConfig {
 		this.fqan = fqan;
 	}
 
+
 	public void setGsiftpRemoteInputParent(String gsiftpRemoteInputParent) {
 		this.gsiftpRemoteInputParent = gsiftpRemoteInputParent;
 	}
-
 
 	public void setInputFileName(String inputFileName) {
 		this.inputFileName = inputFileName;
@@ -225,6 +237,10 @@ public class TestConfig {
 
 	public void setJobname(String jobname) {
 		this.jobname = jobname;
+	}
+
+	public void setMyproxyServer(String myproxyServer) {
+		this.myproxyServer = myproxyServer;
 	}
 
 	public void setSubLoc10minMax(String subLoc) {

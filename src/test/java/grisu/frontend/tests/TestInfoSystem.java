@@ -6,7 +6,6 @@ import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
 import grisu.frontend.tests.utils.TestConfig;
-import grisu.jcommons.constants.GridEnvironment;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
 import grisu.model.info.dto.DtoProperties;
@@ -16,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,10 +42,6 @@ public class TestInfoSystem {
 	@Parameters
 	public static Collection<Object[]> data() {
 
-		String myproxy = config.getMyProxyServer();
-		if (StringUtils.isNotBlank(myproxy)) {
-			GridEnvironment.MYPROXY_SERVER = myproxy;
-		}
 
 		List<Object[]> result = Lists.newArrayList();
 
