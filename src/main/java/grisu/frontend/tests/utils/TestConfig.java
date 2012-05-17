@@ -68,6 +68,7 @@ public class TestConfig {
 	private final String pythonFileName = "pytest.py";
 	private final String killmeScriptName = "kill_me.sh";
 	private final String killJobManagerScriptName = "kill_job_managers.sh";
+	private String myproxyServer;
 
 
 	private Credential cred = null;
@@ -89,7 +90,7 @@ public class TestConfig {
 		if (cred == null) {
 
 			try {
-				cred = (Credential) CredentialLoader
+				cred = CredentialLoader
 						.loadCredentials(credentialConfigFile)
 						.values().iterator().next();
 			} catch (Exception e) {
@@ -154,6 +155,10 @@ public class TestConfig {
 		return this.killmeScriptName;
 	}
 
+	public String getMyProxyServer() {
+		return this.myproxyServer;
+	}
+
 	public String getPythonScript() {
 		return Input.getFile(pythonFileName);
 	}
@@ -209,10 +214,10 @@ public class TestConfig {
 		this.gsiftpRemoteInputParent = gsiftpRemoteInputParent;
 	}
 
+
 	public void setInputFileName(String inputFileName) {
 		this.inputFileName = inputFileName;
 	}
-
 
 	public void setInputFileName2(String inputFileName2) {
 		this.inputFileName2 = inputFileName2;
