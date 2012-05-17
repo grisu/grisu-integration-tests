@@ -13,7 +13,7 @@ import grisu.frontend.tests.utils.Input;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
-import grisu.model.dto.DtoStringList;
+import grisu.model.info.dto.DtoStringList;
 
 import java.io.File;
 import java.util.Collection;

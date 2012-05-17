@@ -2,14 +2,13 @@ package grisu.frontend.tests;
 
 import static org.hamcrest.Matchers.isIn;
 import static org.junit.Assert.assertThat;
-import grisu.control.JobConstants;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.model.job.JobObject;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
-import grisu.model.dto.DtoJob;
+import grisu.model.info.dto.DtoProperties;
 import grisu.model.info.dto.Queue;
 
 import java.util.Collection;
@@ -142,12 +141,11 @@ public class TestInfoSystem {
 		job.setApplication("generic");
 		job.setWalltimeInSeconds(599);
 
-		DtoJob dto = DtoJob.createJob(JobConstants.UNDEFINED,
-				job.getStringJobSubmissionPropertyMap(), null, null, false);
+		DtoProperties dto = DtoProperties.createProperties(job
+				.getStringJobSubmissionPropertyMap());
 
-		List<Queue> queues = si.findMatchingSubmissionLocationsUsingMap(dto,
-				config.getFqan(),
-				false);
+		List<Queue> queues = si.findQueues(dto,
+				config.getFqan());
 
 		boolean contains = false;
 		for (Queue q : queues) {
@@ -174,11 +172,11 @@ public class TestInfoSystem {
 		job.setApplication("generic");
 		job.setWalltimeInSeconds(660);
 
-		DtoJob dto = DtoJob.createJob(JobConstants.UNDEFINED,
-				job.getStringJobSubmissionPropertyMap(), null, null, false);
+		DtoProperties dto = DtoProperties.createProperties(job
+				.getStringJobSubmissionPropertyMap());
 
-		List<Queue> queues = si.findMatchingSubmissionLocationsUsingMap(dto,
-				config.getFqan(), false);
+		List<Queue> queues = si.findQueues(dto,
+				config.getFqan());
 
 		boolean contains = false;
 		for (Queue q : queues) {
