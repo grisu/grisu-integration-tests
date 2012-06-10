@@ -2,10 +2,10 @@ package grisu.frontend.tests.utils;
 
 import grisu.control.ServiceInterface;
 import grisu.frontend.control.login.LoginException;
-import grisu.frontend.control.login.LoginManager;
+import grisu.frontend.control.login.LoginManagerNew;
 import grisu.jcommons.constants.GridEnvironment;
 import grisu.settings.Environment;
-import grith.jgrith.credential.Credential;
+import grith.jgrith.cred.AbstractCred;
 import grith.jgrith.credential.CredentialLoader;
 import groovy.util.ConfigObject;
 import groovy.util.ConfigSlurper;
@@ -79,7 +79,7 @@ public class TestConfig {
 	private String myproxyServer;
 
 
-	private Credential cred = null;
+	private AbstractCred cred = null;
 
 	private Map<String, ServiceInterface> backendCache = null;
 
@@ -94,7 +94,7 @@ public class TestConfig {
 		return content;
 	}
 
-	public Credential getCredential() {
+	public AbstractCred getCredential() {
 		if (cred == null) {
 
 			try {
@@ -189,7 +189,7 @@ public class TestConfig {
 				ServiceInterface si = null;
 
 				try {
-					si = LoginManager.login(getCredential(), b, false);
+					si = LoginManagerNew.login(b, getCredential(), false);
 					backendCache.put(b, si);
 				} catch (LoginException e) {
 					throw new RuntimeException("Can't login: "
