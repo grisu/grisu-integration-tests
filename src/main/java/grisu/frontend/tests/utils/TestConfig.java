@@ -2,7 +2,7 @@ package grisu.frontend.tests.utils;
 
 import grisu.control.ServiceInterface;
 import grisu.frontend.control.login.LoginException;
-import grisu.frontend.control.login.LoginManagerNew;
+import grisu.frontend.control.login.LoginManager;
 import grisu.jcommons.constants.GridEnvironment;
 import grisu.settings.Environment;
 import grith.jgrith.cred.AbstractCred;
@@ -189,7 +189,7 @@ public class TestConfig {
 				ServiceInterface si = null;
 
 				try {
-					si = LoginManagerNew.login(b, getCredential(), false);
+					si = LoginManager.login(b, getCredential(), false);
 					backendCache.put(b, si);
 				} catch (LoginException e) {
 					throw new RuntimeException("Can't login: "
