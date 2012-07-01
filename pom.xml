@@ -145,6 +145,10 @@
 
 	</build>
 
+        <properties>
+                <grisu.version>0.5-rc2-SNAPSHOT</grisu.version>
+	</properties
+
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
