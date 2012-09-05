@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>grith</groupId>
 			<artifactId>jgrith</artifactId>
-			<version>0.7-SNAPSHOT</version>
+			<version>0.7.1</version>
 		</dependency>
 
 		<dependency>
