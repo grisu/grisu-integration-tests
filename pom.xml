@@ -146,12 +146,12 @@
 	</build>
 
         <properties>
-                <grisu.version>0.5-rc2-SNAPSHOT</grisu.version>
+                <grisu.version>0.5</grisu.version>
 	</properties>
 
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.11</version>
+		<version>0.20</version>
 	</parent>
 </project>
