@@ -182,12 +182,12 @@
 	</build>
 
         <properties>
-                <grisu.version>0.5.10-SNAPSHOT</grisu.version>
+                <grisu.version>0.5.13-SNAPSHOT</grisu.version>
 	</properties>
 
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.22</version>
+		<version>0.23</version>
 	</parent>
 </project>
