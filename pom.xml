@@ -182,7 +182,7 @@
 	</build>
 
         <properties>
-                <grisu.version>0.5.13-SNAPSHOT</grisu.version>
+                <grisu.version>0.5.14-SNAPSHOT</grisu.version>
 	</properties>
 
 	<parent>
