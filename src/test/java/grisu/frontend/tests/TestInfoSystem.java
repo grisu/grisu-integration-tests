@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
 import grisu.frontend.control.login.LoginManager;
-import grisu.frontend.model.job.JobObject;
+import grisu.frontend.model.job.GrisuJob;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
@@ -103,7 +103,7 @@ public class TestInfoSystem {
 	public void testAlmostMaxWalltimeAllowedForQueueJobSubmission()
 			throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
@@ -123,7 +123,7 @@ public class TestInfoSystem {
 	public void testMaxWalltimeNotAllowedForQueueJobSubmission()
 			throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
@@ -140,7 +140,7 @@ public class TestInfoSystem {
 	@Test
 	public void testQueryQueuesAlmostMaxWalltime() {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
@@ -171,7 +171,7 @@ public class TestInfoSystem {
 	@Test
 	public void testQueryQueuesMaxWalltime() {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");

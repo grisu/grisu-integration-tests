@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import grisu.control.JobConstants;
 import grisu.control.ServiceInterface;
 import grisu.control.exceptions.JobPropertiesException;
-import grisu.frontend.model.job.JobObject;
+import grisu.frontend.model.job.GrisuJob;
 import grisu.frontend.tests.utils.Input;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
@@ -135,7 +135,7 @@ public class TestJobSubmission {
 	@Test
 	public void simpleGenericJobWithLocalAndRemoteInput() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("cat " + config.getInputFileName() + " "
 				+ config.getInputFileName2());
@@ -167,7 +167,7 @@ public class TestJobSubmission {
 	public void simpleGenericJobWithLocalInput() throws Exception {
 
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("cat " + config.getInputFileName());
 		job.setApplication("generic");
@@ -195,7 +195,7 @@ public class TestJobSubmission {
 	@Test
 	public void simpleGenericJobWithRemoteInput() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("cat " + config.getInputFileName());
 		job.setApplication("generic");
@@ -226,7 +226,7 @@ public class TestJobSubmission {
 	@Test
 	public void testClean() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		String command = "sleep 12345";
 		job.setCommandline(command);
@@ -253,7 +253,7 @@ public class TestJobSubmission {
 	@Test
 	public void testEnvironmentVariables() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("env");
 		job.setApplication("generic");
@@ -283,7 +283,7 @@ public class TestJobSubmission {
 	@Test
 	public void testGetStatusSurvivesJobManagerRestart() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		String command = "bash " + config.getKillJobManagersScriptName() + " 1";
 		job.setCommandline(command);
@@ -315,7 +315,7 @@ public class TestJobSubmission {
 	@Test
 	public void testKill() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		String command = "bash " + config.getKillmeScriptName() + " 1234";
 		job.setCommandline(command);
@@ -349,7 +349,7 @@ public class TestJobSubmission {
 	@Test
 	public void testKillSurvivesJobManagerRestart() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		String command = "bash " + config.getKillJobManagersScriptName() + " 12345";
 		job.setCommandline(command);
@@ -383,7 +383,7 @@ public class TestJobSubmission {
 	@Test(expected = JobPropertiesException.class)
 	public void testPackageNotAvailable() throws JobPropertiesException {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo nothing");
 		job.setApplication("Invalid");
@@ -401,7 +401,7 @@ public class TestJobSubmission {
 	@Test
 	public void testPythonStdinIssue() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("python " + config.getPythonScriptName());
 		job.setApplication("Python");
@@ -433,7 +433,7 @@ public class TestJobSubmission {
 	public void testSimpleGenericJob() throws Exception {
 
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("generic");
@@ -459,7 +459,7 @@ public class TestJobSubmission {
 	@Test
 	public void testSimpleUnixCommandsJob() throws Exception {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo " + config.getContent());
 		job.setApplication("UnixCommands");
@@ -486,7 +486,7 @@ public class TestJobSubmission {
 	@Test(expected = JobPropertiesException.class)
 	public void testVersionNotAvailable() throws JobPropertiesException {
 
-		JobObject job = new JobObject(si);
+		GrisuJob job = new GrisuJob(si);
 		job.setJobname(config.getJobname());
 		job.setCommandline("echo nothing");
 		job.setApplication("UnixCommands");
