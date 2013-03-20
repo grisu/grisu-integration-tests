@@ -73,11 +73,6 @@
 			<version>${grisu.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>grith</groupId>
-			<artifactId>jgrith</artifactId>
-			<version>0.9-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 	<build>
