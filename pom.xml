@@ -76,7 +76,7 @@
         <dependency>
             <groupId>grith</groupId>
             <artifactId>jgrith</artifactId>
-            <version>0.16</version>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
@@ -189,12 +189,12 @@
 	</build>
 
         <properties>
-                <grisu.version>0.6.6</grisu.version>
+                <grisu.version>0.6.7-SNAPSHOT</grisu.version>
 	</properties>
 
 	<parent>
 		<groupId>nz.org.nesi</groupId>
 		<artifactId>nesi</artifactId>
-		<version>0.23</version>
+		<version>0.26</version>
 	</parent>
 </project>
