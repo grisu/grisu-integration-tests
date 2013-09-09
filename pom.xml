@@ -36,7 +36,7 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>grisu.backend</groupId>
+			<groupId>grisu</groupId>
 			<artifactId>grisu-commons</artifactId>
 			<version>${grisu.version}</version>
 		</dependency>
