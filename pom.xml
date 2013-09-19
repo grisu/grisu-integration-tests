@@ -194,7 +194,8 @@
 	</build>
 
         <properties>
-                <grisu.version>0.7.9-SNAPSHOT</grisu.version>
+<!--                <grisu.version>0.7.9-SNAPSHOT</grisu.version>-->
+                <grisu.version>0.7.5</grisu.version>
 	</properties>
 
 	<parent>
