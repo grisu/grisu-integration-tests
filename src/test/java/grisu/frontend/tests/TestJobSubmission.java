@@ -170,10 +170,18 @@ public class TestJobSubmission {
 
 		job.createJob(config.getFqan());
 		job.submitJob(true);
+        GridFile f = job.listJobDirectory();
+        for ( GridFile c : f.getChildren() ) {
+            System.out.println("\tChild of '"+f.getUrl()+": "+c.getUrl());
+            System.out.println("\t=========================");
+            System.out.println("Content:");
+            System.out.println(fm.getFileContent(c.getUrl()));
+            System.out.println("\t=========================");
+        }
 
 		job.waitForJobToFinish(4);
 
-        GridFile f = job.listJobDirectory();
+        f = job.listJobDirectory();
         for ( GridFile c : f.getChildren() ) {
             System.out.println("\tChild of '"+f.getUrl()+": "+c.getUrl());
             System.out.println("\t=========================");
