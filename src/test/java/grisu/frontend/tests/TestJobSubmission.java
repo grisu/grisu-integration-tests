@@ -322,6 +322,8 @@ public class TestJobSubmission {
 		job.kill(false);
 		// job.waitForJobToFinish(3);
 
+        Thread.sleep(60000);
+
 		String stdout = job.getStdOutContent();
 		String status = job.getStatusString(true);
 		myLogger.warn("stdout: " + stdout);
