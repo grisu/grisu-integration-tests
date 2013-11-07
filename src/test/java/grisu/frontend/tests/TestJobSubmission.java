@@ -9,6 +9,7 @@ import grisu.frontend.tests.utils.Input;
 import grisu.frontend.tests.utils.TestConfig;
 import grisu.model.FileManager;
 import grisu.model.GrisuRegistryManager;
+import grisu.model.dto.GridFile;
 import grisu.model.info.dto.DtoStringList;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -171,6 +172,15 @@ public class TestJobSubmission {
 		job.submitJob(true);
 
 		job.waitForJobToFinish(4);
+
+        GridFile f = job.listJobDirectory();
+        for ( GridFile c : f.getChildren() ) {
+            System.out.println("\tChild of '"+f.getUrl()+": "+c.getUrl());
+            System.out.println("\t=========================");
+            System.out.println("Content:");
+            System.out.println(fm.getFileContent(c.getUrl()));
+            System.out.println("\t=========================");
+        }
 
 		String stdout = job.getStdOutContent();
 		myLogger.debug("Content: " + stdout);
